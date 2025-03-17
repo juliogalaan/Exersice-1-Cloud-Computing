@@ -67,6 +67,7 @@ try{
     }
 
 }catch{
+    //res.render("home");
     res.send("wrong detail")
 
 }

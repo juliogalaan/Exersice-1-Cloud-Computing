@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,25 @@
 </head>
 <body>
 
-    <h1 style="text-align:center">Welcome to home page</h1>
+    <h1>Tu Lista de Tareas</h1>
+
+    <% if (tasks && tasks.length > 0) { %>
+        <ul>
+            <% tasks.forEach(task => { %>
+                <li><%= task.text %></li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No tienes tareas aún.</p>
+    <% } %>
     
+
+    <form action="/add" method="POST">
+        <input type="text" name="task" placeholder="Nueva tarea" required>
+        <button type="submit">Agregar</button>
+    </form>
+
+    <a href="/logout">Cerrar Sesión</a>
+
 </body>
 </html>

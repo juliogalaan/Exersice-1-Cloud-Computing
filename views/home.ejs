@@ -3,29 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Tu Lista de Tareas</title>
 </head>
 <body>
-
     <h1>Tu Lista de Tareas</h1>
 
     <% if (tasks && tasks.length > 0) { %>
         <ul>
             <% tasks.forEach(task => { %>
-                <li><%= task.text %></li>
+                <li><%= task.text %> - <%= task.createdAt.toLocaleString() %></li>
             <% }); %>
         </ul>
     <% } else { %>
-        <p>No tienes tareas aún.</p>
+        <p>No tienes tareas.</p>
     <% } %>
-    
 
     <form action="/add" method="POST">
         <input type="text" name="task" placeholder="Nueva tarea" required>
-        <button type="submit">Agregar</button>
+        <button type="submit">Agregar tarea</button>
     </form>
 
-    <a href="/logout">Cerrar Sesión</a>
-
+    <a href="/logout">Cerrar sesión</a>
 </body>
 </html>

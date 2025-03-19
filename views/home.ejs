@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Tu Lista de Tareas</title>
+     <link rel="stylesheet" href="home.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Tu Lista de Tareas</h1>
 
-    <h1 style="text-align:center">Welcome to home page</h1>
-    
+        <% if (tasks && tasks.length > 0) { %>
+            <ul>
+                <% tasks.forEach(task => { %>
+                    <li class="<%= task.completed ? 'completed' : '' %>">
+                        <span><%= task.text %></span>
+                        <span class="task-date"><%= task.createdAt.toLocaleString() %></span>
+
+                        <!-- Formulario para marcar como completado -->
+                        <form action="/complete" method="POST">
+                            <input type="hidden" name="taskId" value="<%= task._id %>">
+                            <button type="submit" class="complete-btn">
+                                <%= task.completed ? "Desmarcar" : "Completar" %>
+                            </button>
+                        </form>
+
+                        <!-- Formulario para eliminar la tarea -->
+                        <form action="/delete" method="POST">
+                            <input type="hidden" name="taskId" value="<%= task._id %>">
+                            <button type="submit" class="delete-btn">Eliminar</button>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No tienes tareas.</p>
+        <% } %>
+
+        <form action="/add" method="POST">
+            <input type="text" name="task" placeholder="Nueva tarea" required>
+            <button type="submit">Agregar tarea</button>
+        </form>
+
+        <a href="/logout" class="logout">Cerrar sesión</a>
+    </div>
 </body>
 </html>

@@ -1,69 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
 }
 
-h1 {
-    color: #333;
-}
-
+/* Contenedor principal */
 .container {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 350px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
     text-align: center;
 }
 
+/* Título */
+h1 {
+    color: #333;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Lista de tareas */
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 li {
-    background: #e3f2fd;
+    background: #eaf2ff;
     margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px;
+    border-radius: 8px;
     font-size: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: transform 0.2s ease-in-out;
 }
 
+li:hover {
+    transform: scale(1.02);
+}
+
+/* Tareas completadas */
 .completed {
     text-decoration: line-through;
     color: #777;
+    background: #d3f9d8;
 }
 
+/* Fecha de tarea */
 .task-date {
     font-size: 12px;
-    color: #777;
+    color: #555;
 }
 
+/* Formularios */
 form {
-    display: inline;
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
 }
 
+/* Input de nueva tarea */
+input[name="task"] {
+    font-size: 16px;
+    padding: 12px;
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+/* Botón de agregar tarea */
 button {
+    font-size: 16px;
+    padding: 12px 16px;
     background: #007bff;
     color: white;
     border: none;
-    padding: 5px 10px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
+    transition: background 0.3s ease-in-out;
 }
 
 button:hover {
     background: #0056b3;
+}
+
+/* Botones de completar y eliminar */
+.complete-btn {
+    background: #28a745;
+}
+
+.complete-btn:hover {
+    background: #218838;
 }
 
 .delete-btn {
@@ -74,22 +117,17 @@ button:hover {
     background: #c82333;
 }
 
-.complete-btn {
-    background: #28a745;
-}
-
-.complete-btn:hover {
-    background: #218838;
-}
-
+/* Botón de cerrar sesión */
 .logout {
     display: block;
-    margin-top: 15px;
+    margin-top: 20px;
     color: white;
     text-decoration: none;
     background: #dc3545;
-    padding: 8px 12px;
-    border-radius: 5px;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: background 0.3s ease-in-out;
 }
 
 .logout:hover {

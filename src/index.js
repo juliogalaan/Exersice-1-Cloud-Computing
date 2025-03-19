@@ -7,6 +7,7 @@ const Task = require('./taskModel'); // Asegúrate de requerir el modelo de Task
 const app = express();
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const mongoose = require("mongoose");
 
 app.use(session({
     secret: "tuClaveSecreta",  // Cambia esto por una clave segura
@@ -103,48 +104,45 @@ app.post("/login", async (req, res) => {
 
 
 // PARTE TODO LIST 
-
 app.get("/home", async (req, res) => {
+    if (!req.session.userId) {
+        return res.redirect("/login");
+    }
+
     try {
-        // Obtener todas las tareas del usuario
+        // Obtener las tareas del usuario
         const tasks = await Task.find({ userId: req.session.userId });
 
-        // Renderizar la vista "home.ejs" con las tareas del usuario
-        res.render("home", { tasks: tasks });
+        // Mostrar las tareas en la vista
+        res.render("home", { tasks });
     } catch (error) {
         console.error("Error al obtener tareas:", error);
         res.status(500).send("Error al obtener tareas");
     }
 });
 
-
-
-//agregar tareas 
+// Agregar tareas
 app.post("/add", async (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).send("No autorizado");
+    }
+
     try {
-        // Obtén el usuario de la base de datos usando el userId almacenado en la sesión
-        const user = await collection.findOne({ _id: req.session.userId });
-
-        if (!user) {
-            return res.status(404).send("Usuario no encontrado");
-        }
-
-        // Crear una nueva tarea
+        // Crear y guardar la nueva tarea en MongoDB
         const newTask = new Task({
             text: req.body.task,
-            userId: req.session.userId // Asocia la tarea al usuario
+            userId: new mongoose.Types.ObjectId(req.session.userId) // Asegura que sea un ObjectId válido
         });
 
-        // Guardar la nueva tarea en la base de datos
         await newTask.save();
 
-        // Redirigir al usuario a la página de inicio con las tareas actualizadas
-        res.redirect("/home"); //CUIDADO
+        res.redirect("/home"); // Redirige para actualizar la lista
     } catch (error) {
         console.error("Error al agregar tarea:", error);
         res.status(500).send("Error al agregar tarea");
     }
 });
+
 
 //eliminar tareas
 app.post("/delete", async (req, res) => {

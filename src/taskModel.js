@@ -12,11 +12,14 @@ const taskSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId, // Referencia al usuario
         required: true,
-        ref: "users" // Esto indica que "userId" es una referencia a la colección "users"
+        ref: "users"
+    },
+    completed: {
+        type: Boolean,
+        default: false // Por defecto, la tarea no está completada
     }
 });
 
-// Crear el modelo de la colección "tasks"
 const Task = mongoose.model("tasks", taskSchema);
 
 module.exports = Task;

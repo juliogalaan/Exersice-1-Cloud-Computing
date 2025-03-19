@@ -66,8 +66,7 @@ if(existingUser){
 }  
 })
 
-
-//Login User
+//login
 app.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -76,10 +75,6 @@ app.post("/login", async (req, res) => {
         if (!user) {
             return res.send("Usuario no encontrado");
         }
-        // Asegúrate de que tasks sea un array vacío si no existe
-        if (!user.tasks) {
-            user.tasks = [];
-        }
 
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
@@ -87,18 +82,22 @@ app.post("/login", async (req, res) => {
         }
 
         // Guardar el ID del usuario en la sesión
-        req.session.userId = user._id; 
+        req.session.userId = user._id;
 
         console.log("Sesión después de asignar userId:", req.session);
 
-        // Redirigir al To-Do List (home.ejs)
-        res.render("home", { tasks: user.tasks });
+        // 🔹 Obtener las tareas del usuario desde la colección "tasks"
+        const tasks = await Task.find({ userId: user._id });
+
+        // Redirigir al To-Do List con las tareas cargadas
+        res.render("home", { tasks });
 
     } catch (error) {
         console.error("Error en login:", error);
         res.status(500).send("Error en el servidor.");
     }
 });
+
 
 
 
@@ -110,8 +109,11 @@ app.get("/home", async (req, res) => {
     }
 
     try {
-        // Obtener las tareas del usuario
-        const tasks = await Task.find({ userId: req.session.userId });
+        // Convertir userId en un ObjectId válido
+        const userId = new mongoose.Types.ObjectId(req.session.userId);
+
+        // Obtener las tareas del usuario desde MongoDB
+        const tasks = await Task.find({ userId });
 
         // Mostrar las tareas en la vista
         res.render("home", { tasks });

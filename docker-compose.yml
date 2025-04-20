@@ -1,0 +1,24 @@
+services:
+  mongoservice:
+    image: mongo:6.0
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=myuser
+      - MONGO_INITDB_ROOT_PASSWORD=mypassword
+      - MONGO_INITDB_DATABASE=Login
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  appservice:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongoservice
+    environment:
+      MONGO_URI: mongodb://myuser:mypassword@mongoservice:27017/Login
+
+volumes:
+  mongo-data:

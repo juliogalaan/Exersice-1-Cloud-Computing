@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const collection=require("./config");
 const Task = require('./taskModel');
 const app = express();
@@ -12,7 +12,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: 'mongodb://localhost:27017/Login', //conexion a la base de datos
+        mongoUrl: 'mongodb://myuser:mypassword@mongoservice:27017/Login?authSource=admin'
+, //conexion a la base de datos //?¿?¿?¿?¿?¿?¿?
         collectionName: "sessions"
     }),
     cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 día por ejemplo

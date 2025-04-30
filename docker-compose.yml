@@ -1,4 +1,7 @@
+version: '3.8'
+
 services:
+  # MongoDB: Servicio de base de datos compartida
   mongoservice:
     image: mongo:6.0
     restart: always
@@ -11,10 +14,31 @@ services:
     volumes:
       - mongo-data:/data/db
 
-  appservice:
+  # Backend 1: Instancia del back-end en el puerto 3001
+  backend1:
     build: .
     ports:
-      - "5000:5000"
+      - "3001:5000"  # Exponer el puerto 5000 de la app al 3001
+    depends_on:
+      - mongoservice
+    environment:
+      MONGO_URI: mongodb://myuser:mypassword@mongoservice:27017/Login
+
+  # Backend 2: Instancia del back-end en el puerto 3002
+  backend2:
+    build: .
+    ports:
+      - "3002:5000"  # Exponer el puerto 5000 de la app al 3002
+    depends_on:
+      - mongoservice
+    environment:
+      MONGO_URI: mongodb://myuser:mypassword@mongoservice:27017/Login
+
+  # Backend 3: Instancia del back-end en el puerto 3003
+  backend3:
+    build: .
+    ports:
+      - "3003:5000"  # Exponer el puerto 5000 de la app al 3003
     depends_on:
       - mongoservice
     environment:
@@ -22,3 +46,4 @@ services:
 
 volumes:
   mongo-data:
+

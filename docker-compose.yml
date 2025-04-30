@@ -44,6 +44,16 @@ services:
     environment:
       MONGO_URI: mongodb://myuser:mypassword@mongoservice:27017/Login
 
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
 volumes:
   mongo-data:
 

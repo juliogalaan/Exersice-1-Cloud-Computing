@@ -18,31 +18,32 @@ services:
   backend1:
     build: .
     ports:
-      - "3001:5000"  # Exponer el puerto 5000 de la app al 3001
+      - "3001:5000"
     depends_on:
       - mongoservice
     environment:
-      MONGO_URI: mongodb://myuser:mypassword@mongoservice:27017/Login
+      - MONGO_URI=mongodb://myuser:mypassword@mongoservice:27017/Login
+      - INSTANCE_NAME=backend1
 
-  # Backend 2: Instancia del back-end en el puerto 3002
   backend2:
     build: .
     ports:
-      - "3002:5000"  # Exponer el puerto 5000 de la app al 3002
+      - "3002:5000"
     depends_on:
       - mongoservice
     environment:
-      MONGO_URI: mongodb://myuser:mypassword@mongoservice:27017/Login
+      - MONGO_URI=mongodb://myuser:mypassword@mongoservice:27017/Login
+      - INSTANCE_NAME=backend2
 
-  # Backend 3: Instancia del back-end en el puerto 3003
   backend3:
     build: .
     ports:
-      - "3003:5000"  # Exponer el puerto 5000 de la app al 3003
+      - "3003:5000"
     depends_on:
       - mongoservice
     environment:
-      MONGO_URI: mongodb://myuser:mypassword@mongoservice:27017/Login
+      - MONGO_URI=mongodb://myuser:mypassword@mongoservice:27017/Login
+      - INSTANCE_NAME=backend3
 
   nginx:
     image: nginx:alpine

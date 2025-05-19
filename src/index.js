@@ -6,6 +6,8 @@ const app = express();
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const mongoose = require("mongoose");
+const INSTANCE_NAME = process.env.INSTANCE_NAME || "unknown";
+
 
 app.use(session({
     secret: "tuClaveSecreta",  // Clave secreta para firmar la cookie de sesión
@@ -34,12 +36,15 @@ app.set('view engine','ejs' )
 app.get("/", (req, res)=> {
     res.render("login")
 });
+
 app.get("/login", (req, res) => {
     res.render("login"); 
 });
+
 app.get("/signup", (req,res)=>{
     res.render("signup")
 });
+
 
 //Register user
 app.post("/signup", async (req, res)=>{

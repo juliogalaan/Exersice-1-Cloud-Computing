@@ -16,6 +16,7 @@ services:
 
   # Backend 1: Instancia del back-end en el puerto 3001
   backend1:
+    image: tu-usuario/todo-app:latest
     build: .
     ports:
       - "3001:5000"
@@ -26,6 +27,7 @@ services:
       - INSTANCE_NAME=backend1
 
   backend2:
+    image: tu-usuario/todo-app:latest
     build: .
     ports:
       - "3002:5000"
@@ -36,6 +38,7 @@ services:
       - INSTANCE_NAME=backend2
 
   backend3:
+    image: tu-usuario/todo-app:latest
     build: .
     ports:
       - "3003:5000"

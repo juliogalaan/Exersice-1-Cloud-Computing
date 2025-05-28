@@ -5,8 +5,8 @@ metadata:
 spec:
   selector:
     app: nginx
+  type: NodePort
   ports:
-    - protocol: TCP
-      port: 80        # Puerto del servicio dentro del clúster
-      targetPort: 8080  # Puerto del contenedor al que se dirige el tráfico
-  type: ClusterIP
+    - port: 80
+      targetPort: 80
+      nodePort: 30001

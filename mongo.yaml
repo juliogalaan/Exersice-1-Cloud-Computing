@@ -1,7 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+<<<<<<< HEAD:mongodb-deployment.yaml
   name: mongodb-deployment
+=======
+  name: mongodb
+  labels:
+    app: mongodb
+>>>>>>> 84d098d54514db6d25d56a312f0791cfaae4cc15:mongo.yaml
 spec:
   replicas: 1
   selector:
@@ -24,7 +30,22 @@ spec:
               name: mongodb-secret
               key: mongo-root-username
         - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom:
+          valueFrom: 
             secretKeyRef:
               name: mongodb-secret
               key: mongo-root-password
+<<<<<<< HEAD:mongodb-deployment.yaml
+=======
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+>>>>>>> 84d098d54514db6d25d56a312f0791cfaae4cc15:mongo.yaml

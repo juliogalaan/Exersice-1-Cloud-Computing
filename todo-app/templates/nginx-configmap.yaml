@@ -7,7 +7,7 @@ data:
     events {}
 
     http {
-      upstream backend {
+      upstream backend_cluster {
         server {{ .Release.Name }}-backend-service:5000;
       }
 
@@ -15,7 +15,7 @@ data:
         listen 80;
 
         location / {
-          proxy_pass http://backend;
+          proxy_pass http://backend_cluster;
         }
       }
     }

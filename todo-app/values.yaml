@@ -1,0 +1,10 @@
+mongodb:
+  username: myuser
+  password: mypassword
+  database: Login
+
+backend:
+  replicas: 3
+  image:
+    repository: juliogalaan/todo-app
+    tag: latest

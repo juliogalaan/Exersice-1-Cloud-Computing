@@ -19,7 +19,9 @@ spec:
             - containerPort: 5000
           env:
             - name: MONGO_URI
-              value: mongodb://{{ .Values.mongodb.username }}:{{ .Values.mongodb.password }}@{{ .Values.mongodb.serviceName }}:27017/{{ .Values.mongodb.database }}
+              value: mongodb://myuser:mypassword@mi-todo-mongoservice:27017/Login
+
+
 ---
 apiVersion: v1
 kind: Service

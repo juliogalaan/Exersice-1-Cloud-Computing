@@ -1,5 +1,4 @@
 mongodb:
-  serviceName: miapp-mongoservice
   username: myuser
   password: mypassword
   database: Login

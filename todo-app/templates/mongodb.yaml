@@ -30,6 +30,7 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-mongoservice
 spec:
+  type: LoadBalancer
   selector:
     app: {{ .Release.Name }}-mongodb
   ports:

@@ -31,9 +31,10 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-nginx-service
 spec:
+  type: NodePort
   selector:
     app: {{ .Release.Name }}-nginx
   ports:
     - port: 80
       targetPort: 80
-  type: NodePort
+      nodePort: 30080  # Puedes cambiarlo a cualquier puerto disponible dentro del rango 30000–32767

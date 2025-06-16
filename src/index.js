@@ -14,7 +14,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: 'mongodb://myuser:mypassword@mongoservice:27017/Login?authSource=admin'
+        mongoUrl: process.env.MONGO_URI || 'mongodb://todo-app-mongodb:27017/Login'
 , //conexion a la base de datos //?¿?¿?¿?¿?¿?¿?
         collectionName: "sessions"
     }),

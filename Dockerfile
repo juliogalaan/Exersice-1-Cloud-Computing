@@ -1,22 +1,20 @@
 # Paso 1: Usar una imagen base ligera de Node.js
 FROM node:16-alpine
 
-# Paso 2: Cambiar al usuario 'node' por razones de seguridad
-USER node
-
-# Paso 3: Establecer el directorio de trabajo dentro del contenedor
+# Paso 2: Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /home/node
 
-# Paso 4: Copiar package.json y package-lock.json y dar permisos al usuario node
-COPY --chown=node:node ./package.json ./package.json
-COPY --chown=node:node ./package-lock.json ./package-lock.json
+# Paso 3: Copiar package.json y package-lock.json primero para aprovechar cache de Docker
+COPY --chown=node:node package.json package-lock.json ./
 
-# Paso 5: Ejecutar npm install para instalar las dependencias
-
+# Paso 4: Instalar dependencias
 RUN npm install
 
-# Paso 6: Copiar el resto de los archivos del proyecto al contenedor
+# Paso 5: Copiar el resto de archivos (incluyendo src) con permisos correctos
 COPY --chown=node:node . .
 
-# Paso 7: Especificar el comando que se ejecutará al iniciar el contenedor
-CMD ["node", "src/index.js"]
+# Paso 6: Cambiar a usuario 'node' por seguridad (debe hacerse después de copiar archivos para evitar problemas de permisos)
+USER node
+
+# Paso 7: Comando para iniciar la app con delay para esperar MongoDB
+CMD ["sh", "-c", "sleep 10 && node src/index.js"]

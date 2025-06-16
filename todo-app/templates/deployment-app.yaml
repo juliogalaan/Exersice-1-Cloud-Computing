@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    app: {{ .Release.Name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+    spec:
+      containers:
+        - name: todo-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://todo-app-mongodb:27017/Login"
+            - name: INSTANCE_NAME
+              value: {{ .Release.Name }}
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "5000"
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-app-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-app-config
+data:
+  HOST: "todo-app-mongodb"
+
+  DBNAME: "{{ .Values.mongodb.database }}"
